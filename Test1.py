@@ -7,6 +7,11 @@ from tensorflow.keras.layers import Conv2D
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.layers import MaxPooling2D
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+import os
+import face_recognition
+
+
+
 
 # plots accuracy and loss curves
 def plot_model_history(model_history):
@@ -30,16 +35,16 @@ def plot_model_history(model_history):
     axs[1].set_xlabel('Epoch')
     axs[1].set_xticks(np.arange(1,len(model_history.history['loss'])+1),len(model_history.history['loss'])/10)
     axs[1].legend(['train', 'val'], loc='best')
-    fig.savefig('plot12050.png')
+    fig.savefig('plotbatch150ep50.png')
     plt.show()
 # Define data generators
-train_dir = 'data/test'
-val_dir = 'data/train'
+train_dir = 'data/train'
+val_dir = 'data/test'
 
-num_val = 28709
-num_train = 7178
-batch_size = 120
-num_epoch = 50
+num_train = 28709
+num_val = 7178
+batch_size = 150
+num_epoch =50
 
 train_datagen = ImageDataGenerator(rescale=1./255)
 val_datagen = ImageDataGenerator(rescale=1./255)
@@ -86,5 +91,5 @@ model_info = model.fit_generator(
     validation_data=validation_generator,
     validation_steps=num_val // batch_size)
 plot_model_history(model_info)
-model.save_weights('model120.h5')
+model.save_weights('model1.h5')
 
